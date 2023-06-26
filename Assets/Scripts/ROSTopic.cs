@@ -7,21 +7,27 @@ using Float32MultiArray = RosMessageTypes.Std.Float32MultiArrayMsg;
 using Unity.Robotics.ROSTCPConnector;
 using Unity.Robotics.ROSTCPConnector.MessageGeneration;
 
-public class ROSTopic : ROSInterface
+public class ROSTopic : MonoBehaviour
 {
-    [SerializeField] private string topicName;
+    private ROSInterface rosinterface;
+    public string topicName;
     private enum PubSub { Pub, Sub }
     [SerializeField] private PubSub pubsub;
+
+    private void Start()
+    {
+        this.rosinterface = this.GetComponent<ROSInterface>();
+    }
 
     public void RegisterPubSub(ROSConnection con)
     {
         switch (this.pubsub)
         {
             case PubSub.Pub:
-                con.RegisterPublisher(this.topicName, this.messageFullName, 1);
+                con.RegisterPublisher(this.topicName, this.rosinterface.MessageFullName, 1);
                 break;
             case PubSub.Sub:
-                con.SubscribeByMessageName(this.topicName, this.messageFullName, this.Callback);
+                con.SubscribeByMessageName(this.topicName, this.rosinterface.MessageFullName, this.Callback);
                 break;
             default:
                 break;
@@ -30,7 +36,7 @@ public class ROSTopic : ROSInterface
 
     private void Callback(Message msg)
     {
-        this.SetVal(msg);
+        this.rosinterface.SetVal(msg);
     }
 
     /*

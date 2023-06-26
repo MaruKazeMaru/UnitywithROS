@@ -4,12 +4,24 @@ using UnityEngine;
 using System;
 using System.Reflection;
 using Unity.Robotics.ROSTCPConnector.MessageGeneration;
+using ROSUnity;
 
 public class ROSInterface : ROSField
 {
-    [SerializeField] protected string packageName;
-    [SerializeField] protected string messageName;
-    protected string messageFullName => this.packageName + "/" + this.messageName;
+    [SerializeField, ReadOnly] protected string packageName;
+    [SerializeField, ReadOnly] protected string messageName;
+    public void SetMessageName(string packageName, string messageName)
+    {
+        this.packageName = packageName;
+        this.messageName = messageName;
+    }
+    public void SetMessageName(string messageFullName)
+    {
+        string[] s = messageFullName.Split('/');
+        this.packageName = s[0];
+        this.messageName = s[1];
+    }
+    public string MessageFullName => this.packageName + "/" + this.messageName;
 
     protected Message val;
 
@@ -51,7 +63,7 @@ public class ROSInterface : ROSField
             // 中身が当クラスで指定したパッケージ、メッセージと合ってるか確認
             string k_rosMessageName = (string)info.GetValue(t);
             //Debug.Log(k_rosMessageName);
-            if (k_rosMessageName == this.messageFullName)
+            if (k_rosMessageName == this.MessageFullName)
             {
                 this.messageType = t;
                 finfos = new List<FieldInfo>(t.GetFields());
