@@ -26,7 +26,7 @@ public class ROSCon : MonoBehaviour
             {
                 if (!this.registeredTopics.Contains(topic))
                 {
-                    topic.RegisterPubSub(this.roscon);
+                    topic.Register(this.roscon);
                     this.registeredTopics.Add(topic);
                 }
             }

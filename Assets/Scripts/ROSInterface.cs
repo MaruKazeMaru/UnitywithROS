@@ -10,75 +10,36 @@ public class ROSInterface : ROSField
 {
     [SerializeField, ReadOnly] protected string packageName;
     [SerializeField, ReadOnly] protected string messageName;
-    public void SetMessageName(string packageName, string messageName)
+    protected string messageFullName;
+
+    public void Init(Type messageType)
     {
-        this.packageName = packageName;
-        this.messageName = messageName;
+        FieldInfo k_name = messageType.GetField("k_RosMessageName");
+        string s = (string)k_name.GetValue(null);
+        string[] ss = s.Split('/');
+        this.packageName = ss[0];
+        this.messageName = ss[1];
     }
-    public void SetMessageName(string messageFullName)
-    {
-        string[] s = messageFullName.Split('/');
-        this.packageName = s[0];
-        this.messageName = s[1];
-    }
-    public string MessageFullName => this.packageName + "/" + this.messageName;
+
+    public string MessageFullName => this.messageFullName;
 
     protected Message val;
+    public Message Val => this.val;
 
     // key : 下層の変数名(ex, Vector3 ならば x,y,z)
     // val : 〃　　　　に対応するROSTopicインスタンス
     protected Dictionary<string, ROSField> fields;
     protected Type messageType;
     protected FieldInfo[] fieldInfos;
+    protected ConstructorInfo constructorInfo;
 
     // Start is called before the first frame update
     protected void Start()
     {
-        // メッセージが定義されている名前空間と名前空間同じクラスを全て取得
-        Type[] msgs = new Type[] { };
-        foreach (AssemblyName aname in Assembly.GetExecutingAssembly().GetReferencedAssemblies())
-        {
-            if (aname.Name == "Unity.Robotics.ROSTCPConnector.Messages")
-            {
-                msgs = Assembly.Load(aname).GetTypes();
-                break;
-            }
-        }
-
-        // メッセージのメンバー変数求める
-        var finfos = new List<FieldInfo>();
-        foreach (Type t in msgs)
-        {
-            //Debug.Log("t.Namespace=" + t.Namespace + " t.Name=" + t.Name);
-
-            // ROS TCP-Connector が生成したメッセージクラスはいずれも
-            // string k_RosMessageName = "<パッケージ名>/<メッセージ名>"
-            // というstring型の変数が用意される
-            FieldInfo info = t.GetField("k_RosMessageName");
-
-            // この変数が存在するか確認
-            if (info == null)
-                continue;
-
-            // 中身が当クラスで指定したパッケージ、メッセージと合ってるか確認
-            string k_rosMessageName = (string)info.GetValue(t);
-            //Debug.Log(k_rosMessageName);
-            if (k_rosMessageName == this.MessageFullName)
-            {
-                this.messageType = t;
-                finfos = new List<FieldInfo>(t.GetFields());
-                break;
-            }
-        }
-        for (int i = finfos.Count - 1; i >= 0; --i)
-        {
-            if (finfos[i].Name == "k_RosMessageName")
-            {
-                finfos.RemoveAt(i);
-                break;
-            }
-        }
-        this.fieldInfos = finfos.ToArray();
+        this.messageFullName = this.packageName + "/" + this.messageName;
+        this.messageType = MessageInfoGetter.GetType(this.packageName, this.messageName);
+        this.fieldInfos = MessageInfoGetter.GetFieldInfos(this.messageType);
+        this.constructorInfo = this.messageType.GetConstructor(Type.EmptyTypes);
 
         // key:メッセージの変数名
         // val:変数(のインスタンス)格納用のROSFieldインスタンス
@@ -119,5 +80,14 @@ public class ROSInterface : ROSField
 
         foreach(FieldInfo fieldInfo in this.fieldInfos)
             this.fields[fieldInfo.Name].SetVal(fieldInfo.GetValue(val));
+    }
+
+    public override object GetVal()
+    {
+        this.val = (Message)this.constructorInfo.Invoke(null);
+        foreach(FieldInfo fieldInfo in this.fieldInfos)
+            fieldInfo.SetValue(this.val, this.fields[fieldInfo.Name].GetVal());
+        //Debug.Log(this.val.ToString());
+        return this.val;
     }
 }

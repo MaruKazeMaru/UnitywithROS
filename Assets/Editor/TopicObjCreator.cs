@@ -16,9 +16,14 @@ public class TopicObjCreator : EditorWindow
         window.ShowUtility();
     }
 
+    private enum TopicType { Pub, Sub };
+
     private string pkg;
     private string msg;
     private string topic;
+    private TopicType pubsub = TopicType.Sub;
+    private float frequency = 1f;
+    private int queueSize = 1;
 
     private void OnGUI()
     {
@@ -26,6 +31,15 @@ public class TopicObjCreator : EditorWindow
         this.msg = EditorGUILayout.TextField("message name", this.msg);
         this.topic = EditorGUILayout.TextField("topic name", this.topic);
         EditorGUILayout.LabelField("You can change topic name after create.");
+        this.pubsub = (TopicType)EditorGUILayout.EnumPopup("pub or sub", this.pubsub);
+
+        if(this.pubsub == TopicType.Pub)
+        {
+            EditorGUILayout.LabelField("publish config");
+            this.frequency = EditorGUILayout.FloatField("frequency", this.frequency);
+            this.queueSize = EditorGUILayout.IntField("queue size", this.queueSize);
+        }
+
         if (GUILayout.Button("Create"))
         {
             Type msgType = MessageInfoGetter.GetType(pkg, msg);
@@ -41,7 +55,21 @@ public class TopicObjCreator : EditorWindow
                 else
                     objName = topic;
                 var obj = new GameObject(objName);
-                obj.AddComponent<ROSTopic>().topicName = this.topic;
+                switch (this.pubsub)
+                {
+                    case TopicType.Pub:
+                        var pub = obj.AddComponent<ROSPub>();
+                        pub.topicName = this.topic;
+                        pub.frequency = this.frequency;
+                        pub.queueSize = this.queueSize;                        
+                        break;
+                    case TopicType.Sub:
+                        var sub = obj.AddComponent<ROSSub>();
+                        sub.topicName = this.topic;
+                        break;
+                    default:
+                        goto case TopicType.Sub;
+                }
                 CreateObj(obj, msgType);
 
                 Undo.RegisterCreatedObjectUndo(obj, "create new topic obj");
@@ -65,8 +93,7 @@ public class TopicObjCreator : EditorWindow
         else
         {
             var i = obj.AddComponent<ROSInterface>();
-            FieldInfo k_name = type.GetField("k_RosMessageName");
-            i.SetMessageName((string)k_name.GetValue(type));
+            i.Init(type);
 
             FieldInfo[] fieldInfos = MessageInfoGetter.GetFieldInfos(type);
             foreach(FieldInfo fieldInfo in fieldInfos)

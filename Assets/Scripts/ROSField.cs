@@ -6,4 +6,5 @@ using Unity.Robotics.ROSTCPConnector;
 public class ROSField : MonoBehaviour
 {
     public virtual void SetVal(object val) { }
+    public virtual object GetVal() { return null; }
 }
