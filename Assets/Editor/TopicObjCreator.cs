@@ -74,13 +74,8 @@ public class TopicObjCreator : EditorWindow
 
                 Undo.RegisterCreatedObjectUndo(obj, "create new topic obj");
 
-                this.Close();
+                EditorGUILayout.LabelField("Creadted " + this.topic);
             }
-        }
-
-        if (GUILayout.Button("Canncel"))
-        {
-            this.Close();
         }
     }
 
