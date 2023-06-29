@@ -5,7 +5,9 @@ using UnityEngine;
 public class VelGet : MonoBehaviour
 {
     [SerializeField] private ROSBuiltinFloat64 go;
+    [SerializeField] private float goCoef;
     [SerializeField] private ROSBuiltinFloat64 turn;
+    [SerializeField] private float tuenCoef;
 
     private Rigidbody _rigidbody;
 
@@ -16,14 +18,15 @@ public class VelGet : MonoBehaviour
 
     private void Update()
     {
-        float z = 0f;
         if (go != null)
-            z = (float)this.go.val;
-        float p = 0f;
+        {
+            float z = this.goCoef * (float)this.go.val;
+            this._rigidbody.AddRelativeForce(new Vector3(0f, 0f, z), ForceMode.VelocityChange);
+        }
         if (this.turn != null)
-            p = (float)this.turn.val;
-
-        this._rigidbody.AddRelativeForce( new Vector3(0f, 0f,  z), ForceMode.VelocityChange);
-        this._rigidbody.AddRelativeTorque(new Vector3(0f,  p, 0f), ForceMode.VelocityChange);
+        {
+            float p = this.tuenCoef * (float)this.turn.val;
+            this._rigidbody.AddRelativeTorque(new Vector3(0f, p, 0f), ForceMode.VelocityChange);
+        }
     }
 }

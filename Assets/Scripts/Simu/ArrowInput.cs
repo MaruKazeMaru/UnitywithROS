@@ -56,14 +56,14 @@ public class ArrowInput : MonoBehaviour
         if (Input.GetKey(this.lKey))
         {
             this.lCnvsGrp.alpha = this.keyDownAlpha;
-            lr += 1;
+            lr -= 1;
         }
         else
             this.lCnvsGrp.alpha = this.keyUpAlpha;
         if (Input.GetKey(this.rKey))
         {
             this.rCnvsGrp.alpha = this.keyDownAlpha;
-            lr -= 1;
+            lr += 1;
         }
         else
             this.rCnvsGrp.alpha = this.keyUpAlpha;
