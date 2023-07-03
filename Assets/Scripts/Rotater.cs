@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ROSUnity;
 
 public class Rotater : MonoBehaviour
 {
-    [SerializeField] private ROSBuiltinFloat64 angVel;
+    [SerializeField] private BuiltinFloat angVel;
     [SerializeField] float angVelCoef;
 
     private void Start()
@@ -13,6 +14,6 @@ public class Rotater : MonoBehaviour
 
     private void Update()
     {
-        this.transform.Rotate(0f, (float)this.angVel.val, 0f);
+        this.transform.Rotate(0f, (float)this.angVel.Val, 0f);
     }
 }

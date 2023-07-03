@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Robotics.ROSTCPConnector;
 using TwistMsg = RosMessageTypes.Geometry.TwistMsg;
-
+/*
 public class ROSSubTest : MonoBehaviour
 {
-    [SerializeField] private ROSBuiltinFloat64 x;
-    [SerializeField] private ROSBuiltinFloat64 y;
-    [SerializeField] private ROSBuiltinFloat64 z;
-    [SerializeField] private ROSBuiltinFloat64 pitch;
-    [SerializeField] private ROSBuiltinFloat64 yaw;
-    [SerializeField] private ROSBuiltinFloat64 roll;
+    [SerializeField] private ROSBuiltinFloat x;
+    [SerializeField] private ROSBuiltinFloat y;
+    [SerializeField] private ROSBuiltinFloat z;
+    [SerializeField] private ROSBuiltinFloat pitch;
+    [SerializeField] private ROSBuiltinFloat yaw;
+    [SerializeField] private ROSBuiltinFloat roll;
 
     void Start()
     {
@@ -36,3 +36,4 @@ public class ROSSubTest : MonoBehaviour
         
     }
 }
+*/

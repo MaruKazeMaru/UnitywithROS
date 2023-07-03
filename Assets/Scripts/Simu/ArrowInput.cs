@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ROSUnity;
 
 public class ArrowInput : MonoBehaviour
 {
-    [SerializeField] private ROSBuiltinFloat64 lrTopic;
-    [SerializeField] private ROSBuiltinFloat64 udTopic;
+    [SerializeField] private BuiltinFloat lrTopic;
+    [SerializeField] private BuiltinFloat udTopic;
 
     [SerializeField] private KeyCode lKey;
     [SerializeField] private KeyCode rKey;
