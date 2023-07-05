@@ -14,6 +14,6 @@ public class Rotater : MonoBehaviour
 
     private void Update()
     {
-        this.transform.Rotate(0f, (float)this.angVel.Val, 0f);
+        this.transform.Rotate(0f, (float)this.angVel.val, 0f);
     }
 }

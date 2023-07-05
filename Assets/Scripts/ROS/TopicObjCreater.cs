@@ -9,10 +9,29 @@ namespace ROSUnity
     {
         public static void Create(GameObject obj, Type messageType)
         {
-            if (messageType == typeof(double) || messageType == typeof(float))
-                obj.AddComponent<BuiltinFloat>();
-            else if (messageType == typeof(uint) || messageType == typeof(int) || messageType == typeof(long) || messageType == typeof(ulong))
-                obj.AddComponent<BuiltinInt>();
+            if (messageType == typeof(float))
+                obj.AddComponent<BuiltinFloat>().bit = 32;
+            else if (messageType == typeof(double))
+                obj.AddComponent<BuiltinFloat>().bit = 64;
+
+            else if (messageType == typeof(sbyte))
+                obj.AddComponent<BuiltinInt>().bit = 8;
+            else if (messageType == typeof(short))
+                obj.AddComponent<BuiltinInt>().bit = 16;
+            else if (messageType == typeof(int))
+                obj.AddComponent<BuiltinInt>().bit = 32;
+            else if (messageType == typeof(long))
+                obj.AddComponent<BuiltinInt>().bit = 64;
+
+            else if (messageType == typeof(byte))
+                obj.AddComponent<BuiltinUInt>().bit = 8;
+            else if (messageType == typeof(ushort))
+                obj.AddComponent<BuiltinUInt>().bit = 16;
+            else if (messageType == typeof(uint))
+                obj.AddComponent<BuiltinUInt>().bit = 32;
+            else if (messageType == typeof(ulong))
+                obj.AddComponent<BuiltinUInt>().bit = 64;
+
             else if (messageType == typeof(string))
                 obj.AddComponent<BuiltinString>();
             else if (messageType == typeof(bool))

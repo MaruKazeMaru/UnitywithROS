@@ -21,12 +21,12 @@ public class VelGet : MonoBehaviour
     {
         if (go != null)
         {
-            float z = this.goCoef * this.go.Valf;
+            float z = this.goCoef * (float)this.go.val;
             this._rigidbody.AddRelativeForce(new Vector3(0f, 0f, z), ForceMode.VelocityChange);
         }
         if (this.turn != null)
         {
-            float p = this.tuenCoef * this.turn.Valf;
+            float p = this.tuenCoef * (float)this.turn.val;
             this._rigidbody.AddRelativeTorque(new Vector3(0f, p, 0f), ForceMode.VelocityChange);
         }
     }

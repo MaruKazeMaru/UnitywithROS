@@ -1,24 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace ROSUnity
 {
-    public class BuiltinInt : Field
+    public class BuiltinUInt : Field
     {
         [SerializeField, ReadOnly] public byte bit;
-        public long val;
+        public ulong val;
 
-        public override void SetVal(object val) { this.val = (long)val; }
+        public override void SetVal(object val)
+        {
+            this.val = (ulong)val;
+        }
 
         public override object GetVal()
         {
             if (this.bit == 8)
-                return (sbyte)this.val;
+                return (byte)this.val;
             else if (this.bit == 16)
-                return (short)this.val;
+                return (ushort)this.val;
             else if (this.bit == 32)
-                return (int)this.val;
+                return (uint)this.val;
             else
                 return this.val;
         }
