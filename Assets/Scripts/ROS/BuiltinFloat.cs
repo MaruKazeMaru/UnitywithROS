@@ -7,7 +7,13 @@ namespace ROSUnity
         [SerializeField, ReadOnly] public byte bit;
         public double val;
 
-        public override void SetVal(object val) { this.val = (double)val; }
+        public override void SetVal(object val)
+        {
+            if (this.bit == 32)
+                this.val = (float)val;
+            else
+                this.val = (double)val;
+        }
 
         public override object GetVal()
         {

@@ -9,7 +9,14 @@ namespace ROSUnity
 
         public override void SetVal(object val)
         {
-            this.val = (ulong)val;
+            if (this.bit == 8)
+                this.val = (byte)val;
+            else if (this.bit == 16)
+                this.val = (ushort)val;
+            else if (this.bit == 32)
+                this.val = (uint)val;
+            else
+                this.val = (ulong)val;
         }
 
         public override object GetVal()

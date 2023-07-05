@@ -9,7 +9,17 @@ namespace ROSUnity
         [SerializeField, ReadOnly] public byte bit;
         public long val;
 
-        public override void SetVal(object val) { this.val = (long)val; }
+        public override void SetVal(object val)
+        {
+            if (this.bit == 8)
+                this.val = (sbyte)val;
+            else if (this.bit == 16)
+                this.val = (short)val;
+            else if (this.bit == 32)
+                this.val = (int)val;
+            else
+                this.val = (long)val;
+        }
 
         public override object GetVal()
         {

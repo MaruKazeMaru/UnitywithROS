@@ -36,10 +36,13 @@ namespace ROSUnity
                 var obj = new GameObject($"element ({n})");
                 obj.transform.parent = this.transform;
                 TopicObjCreater.Create(obj, this.elementType);
+                this.elements.Add(obj.GetComponent<Field>());
+
                 for(int i = n + 1; i < m; ++i)
                 {
                     GameObject objCopy = Instantiate(obj, this.transform);
                     objCopy.name = $"element ({i})";
+                    this.elements.Add(objCopy.GetComponent<Field>());
                 }
             }
 
