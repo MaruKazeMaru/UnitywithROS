@@ -3,7 +3,7 @@ using System.Reflection;
 using UnityEngine;
 using Float32MultiArray = RosMessageTypes.Std.Float32MultiArrayMsg;
 
-namespace ROSUnity
+namespace ROSTopic2GameObject
 {
     public static class TopicObjCreater
     {

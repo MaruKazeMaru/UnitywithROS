@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ROSUnity
+namespace ROSTopic2GameObject
 {
     public class Field : MonoBehaviour
     {

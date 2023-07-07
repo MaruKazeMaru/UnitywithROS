@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ROSUnity
+namespace ROSTopic2GameObject
 {
     public static class MessageInfoGetter
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Robotics.ROSTCPConnector;
 
-namespace ROSUnity
+namespace ROSTopic2GameObject
 {
     public class TopicManager : MonoBehaviour
     {

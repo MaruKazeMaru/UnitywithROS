@@ -6,7 +6,7 @@ using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 
-namespace ROSUnity
+namespace ROSTopic2GameObject
 {
     public class ReadOnlyAttribute : PropertyAttribute { }
 

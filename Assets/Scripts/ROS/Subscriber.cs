@@ -4,7 +4,7 @@ using UnityEngine;
 using Unity.Robotics.ROSTCPConnector;
 using Unity.Robotics.ROSTCPConnector.MessageGeneration;
 
-namespace ROSUnity
+namespace ROSTopic2GameObject
 {
     public class Subscriber : Topic
     {

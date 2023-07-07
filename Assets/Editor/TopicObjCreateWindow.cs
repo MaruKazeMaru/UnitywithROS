@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-namespace ROSUnity
+namespace ROSTopic2GameObject
 {
     public class TopicObjCreateWindow : EditorWindow
     {

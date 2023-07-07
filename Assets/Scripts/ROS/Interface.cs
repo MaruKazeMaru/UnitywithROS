@@ -4,9 +4,9 @@ using UnityEngine;
 using System;
 using System.Reflection;
 using Unity.Robotics.ROSTCPConnector.MessageGeneration;
-using ROSUnity;
+using ROSTopic2GameObject;
 
-namespace ROSUnity
+namespace ROSTopic2GameObject
 {
     public class Interface : Field
     {

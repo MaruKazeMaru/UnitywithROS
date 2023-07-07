@@ -7,7 +7,7 @@ using Float32MultiArray = RosMessageTypes.Std.Float32MultiArrayMsg;
 using Unity.Robotics.ROSTCPConnector;
 using Unity.Robotics.ROSTCPConnector.MessageGeneration;
 
-namespace ROSUnity
+namespace ROSTopic2GameObject
 {
     public class Topic : MonoBehaviour
     {
